@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase xmlns:con="http://eviware.com/soapui/config" id="48c9e1bb-add7-4c06-9970-3fde63eec5ac" discardOkResults="false" failOnError="false" failTestCaseOnErrors="true" keepSession="false" name="DataFromAPi" searchProperties="true" timeout="0">
+  <con:settings>
+    <con:setting id="48c9e1bb-add7-4c06-9970-3fde63eec5acfileName">DataFromAPi</con:setting>
+  </con:settings>
+  <con:properties/>
+  <con:reportParameters/>
+</con:testCase>

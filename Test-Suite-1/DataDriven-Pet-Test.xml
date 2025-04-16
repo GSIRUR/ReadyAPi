@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase xmlns:con="http://eviware.com/soapui/config" id="7d22d586-f25e-406d-a90d-12c7b6040896" discardOkResults="false" failOnError="false" failTestCaseOnErrors="true" keepSession="false" name="DataDriven Pet Test" searchProperties="true" timeout="0">
+  <con:settings>
+    <con:setting id="7d22d586-f25e-406d-a90d-12c7b6040896fileName">DataDriven-Pet-Test</con:setting>
+  </con:settings>
+  <con:testStep type="datasource" name="Data Source" id="069005de-194a-4a45-a6d9-36f3a795eda0">
+    <con:settings/>
+    <con:config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="con:DataSourceStep">
+      <con:dataSource type="Excel">
+        <con:configuration>
+          <file>C:/Users/108078/Downloads/pets_data.xlsx</file>
+          <worksheet>Sheet1</worksheet>
+          <cell>A2</cell>
+          <ignoreEmpty>false</ignoreEmpty>
+          <evaluateFormulas>false</evaluateFormulas>
+        </con:configuration>
+      </con:dataSource>
+      <con:shared>true</con:shared>
+      <con:restartShared>true</con:restartShared>
+      <con:property>petId</con:property>
+      <con:property>categoryId</con:property>
+      <con:property>categoryName</con:property>
+      <con:property>petName</con:property>
+      <con:property>photoUrl</con:property>
+      <con:property>tagId</con:property>
+      <con:property>tagName</con:property>
+      <con:property>petStatus</con:property>
+      <con:restartOnRun>true</con:restartOnRun>
+      <con:stopDatasourceExhausted>false</con:stopDatasourceExhausted>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Create" id="2fbfdf4e-f8a9-42d3-935b-8e0f0b6e3dd6">
+    <con:settings/>
+    <con:config>
+      <script>import groovy.json.JsonOutput
+
+// Helper to safely get and parse values
+def getInt = { field ->
+    def val = context.expand("\${Data Source#$field}")
+    return val?.isInteger() ? val.toInteger() : null
+}
+
+def getStr = { field ->
+    def val = context.expand("\${Data Source#$field}")
+    return val?.trim() ? val : null
+}
+
+// Build JSON payload
+def jsonBody = [
+    id: getInt("petId"),
+    category: [
+        id: getInt("categoryId"),
+        name: getStr("categoryName")
+    ],
+    name: getStr("petName"),
+    photoUrls: [ getStr("photoUrl") ],
+    tags: [[
+        id: getInt("tagId"),
+        name: getStr("tagName")
+    ]],
+    status: getStr("petStatus")
+]
+
+// Log to console
+def jsonStr = JsonOutput.prettyPrint(JsonOutput.toJson(jsonBody))
+log.info("Generated JSON:\n" + jsonStr)
+
+// Assign to CreatePet request
+testRunner.testCase.testSteps["CreatePet"].testRequest.setRequestContent(jsonStr)
+</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="CreatePet" id="76fbcee7-6e40-4666-ad63-e4b14beca54d">
+    <con:settings/>
+    <con:config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" service="Swagger Petstore" resourcePath="/v2/pet" methodName="addPet" xsi:type="con:RestRequestStep">
+      <con:restRequest name="CreatePet" id="d42b857f-5979-426c-94ee-2618a51ee5ee" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>http://petstore.swagger.io</con:endpoint>
+        <con:request>{
+    "id": 1,
+    "category": {
+        "id": 101,
+        "name": "Dog"
+    },
+    "name": "Max",
+    "photoUrls": [
+        "http://example.com/max.jpg"
+    ],
+    "tags": [
+        {
+            "id": 201,
+            "name": "Friendly"
+        }
+    ],
+    "status": "Adopted"
+}</con:request>
+        <con:originalUri>http://petstore.swagger.io/v2/pet</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="01dba171-fbe6-4c0e-9ec4-f53d5a9dbc68" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Response SLA Assertion" id="9691c727-dc4e-4e73-9daa-ec619c229091" name="Response SLA">
+          <con:configuration>
+            <SLA>3000</SLA>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Put" id="ac9f93b9-6d84-4efb-8a98-1fea539c6ce0">
+    <con:settings/>
+    <con:config>
+      <script>import groovy.json.JsonOutput
+
+// Helper to safely get and parse values
+def getInt = { field ->
+    def val = context.expand("\${Data Source#$field}")
+    return val?.isInteger() ? val.toInteger() : null
+}
+
+def getStr = { field ->
+    def val = context.expand("\${Data Source#$field}")
+    return val?.trim() ? val : null
+}
+
+// Build JSON payload
+def jsonBody = [
+    id: getInt("petId"),
+    category: [
+        id: getInt("categoryId"),
+        name: getStr("categoryName")
+    ],
+    name: getStr("petName"),
+    photoUrls: [ getStr("photoUrl") ],
+    tags: [[
+        id: getInt("tagId"),
+        name: getStr("tagName")
+    ]],
+    status: getStr("petStatus")
+]
+
+// Log to console
+def jsonStr = JsonOutput.prettyPrint(JsonOutput.toJson(jsonBody))
+log.info("Generated JSON:\n" + jsonStr)
+
+// Assign to CreatePet request
+testRunner.testCase.testSteps["UpdatePet"].testRequest.setRequestContent(jsonStr)
+</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="UpdatePet" id="2bdc245b-736d-44e1-a7b0-91f9d066f134">
+    <con:settings/>
+    <con:config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" service="Swagger Petstore" resourcePath="/v2/pet" methodName="updatePet" xsi:type="con:RestRequestStep">
+      <con:restRequest name="UpdatePet" id="3230d231-8cc6-4c99-8e01-5b1213c7acde" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>http://petstore.swagger.io</con:endpoint>
+        <con:request>{
+    "id": 1,
+    "category": {
+        "id": 101,
+        "name": "Dog"
+    },
+    "name": "Max",
+    "photoUrls": [
+        "http://example.com/max.jpg"
+    ],
+    "tags": [
+        {
+            "id": 201,
+            "name": "Friendly"
+        }
+    ],
+    "status": "Adopted"
+}</con:request>
+        <con:originalUri>https://petstore.swagger.io/v2/pet</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="4bddbdb9-7153-4b12-ab24-bc462ba92b1e" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Response SLA Assertion" id="5018f3ba-0f49-4f18-94cb-d076d59e38b0" name="Response SLA">
+          <con:configuration>
+            <SLA>5000</SLA>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="datasourceloop" name="Data Source Loop" id="e86ebf9b-cca3-4d8d-b1c0-b364c922c5a7">
+    <con:settings/>
+    <con:config>
+      <dataSourceStep>Data Source</dataSourceStep>
+      <targetStep>Data Source</targetStep>
+      <discardResults>false</discardResults>
+    </con:config>
+  </con:testStep>
+  <con:properties>
+    <con:property>
+      <con:name>currentPetId</con:name>
+      <con:value/>
+    </con:property>
+    <con:property>
+      <con:name>GetPetResponse</con:name>
+      <con:value>{"id":1,"category":{"id":101,"name":"Dog"},"name":"Max","photoUrls":["http://example.com/max.jpg"],"tags":[{"id":201,"name":"Friendly"}],"status":"Adopted"}</con:value>
+    </con:property>
+    <con:property>
+      <con:name>DeletePetResponse</con:name>
+      <con:value>{"code":200,"type":"unknown","message":"1"}</con:value>
+    </con:property>
+  </con:properties>
+  <con:reportParameters/>
+</con:testCase>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase xmlns:con="http://eviware.com/soapui/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="92dd5815-f8c6-490e-8a0c-34f9f40a9589" discardOkResults="false" failOnError="false" failTestCaseOnErrors="true" keepSession="false" name="TestingWithExcel" searchProperties="true" timeout="0">
+  <con:settings>
+    <con:setting id="92dd5815-f8c6-490e-8a0c-34f9f40a9589fileName">TestingWithExcel</con:setting>
+  </con:settings>
+  <con:testStep type="datasource" name="Data Source" id="e72d1a3b-85f1-46ed-878e-f770da263daf">
+    <con:settings/>
+    <con:config xsi:type="con:DataSourceStep">
+      <con:dataSource type="Excel">
+        <con:configuration>
+          <file>C:/Users/108078/Downloads/TestingData.xlsx</file>
+          <worksheet>Sheet1</worksheet>
+          <cell>A2</cell>
+          <ignoreEmpty>false</ignoreEmpty>
+          <evaluateFormulas>false</evaluateFormulas>
+        </con:configuration>
+      </con:dataSource>
+      <con:shared>true</con:shared>
+      <con:restartShared>true</con:restartShared>
+      <con:property>132</con:property>
+      <con:property>Lion</con:property>
+      <con:property>Cat</con:property>
+      <con:property>Pending</con:property>
+      <con:property>Available</con:property>
+      <con:restartOnRun>true</con:restartOnRun>
+      <con:stopDatasourceExhausted>false</con:stopDatasourceExhausted>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Post" id="f109c287-29cc-44ff-87d9-ba92ae22159a">
+    <con:settings/>
+    <con:config service="Swagger Petstore" resourcePath="/v2/pet" methodName="updatePet" xsi:type="con:RestRequestStep">
+      <con:restRequest name="Post" id="3230d231-8cc6-4c99-8e01-5b1213c7acde" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>http://petstore.swagger.io</con:endpoint>
+        <con:request>{
+  "id": 132,
+  "category": {
+    "id": 27,
+    "name": "Lion"
+  },
+  "name": "doggie",
+  "photoUrls": [
+    "string"
+  ],
+  "tags": [
+    {
+      "id": 28,
+      "name": "Dogs"
+    }
+  ],
+  "status": "available"
+}</con:request>
+        <con:originalUri>https://petstore.swagger.io/v2/pet</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="ae6166c9-3255-4fea-a0a5-5a9e2f2d9a77" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="GET" id="eef4f0eb-053d-4eaa-aff3-0ac5834c5722">
+    <con:settings/>
+    <con:config service="Swagger Petstore" methodName="uploadFile" resourcePath="/v2/pet/{petId}/uploadImage" xsi:type="con:RestRequestStep">
+      <con:restRequest name="GET" id="47b2698c-55e6-41cf-8c03-4484b9085756" mediaType="multipart/form-data" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>http://petstore.swagger.io</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://petstore.swagger.io/v2/pet/132/uploadImage</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="ffd74cc8-3b91-4647-bc2d-9de35651e5e9" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Response SLA Assertion" id="61b565c9-1532-4df0-b873-bb4b1ff62ed7" name="Response SLA">
+          <con:configuration>
+            <SLA>200</SLA>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="petId" value="${Post#Response#$['id']}"/>
+        </con:parameters>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:properties/>
+  <con:reportParameters/>
+</con:testCase>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:resource xmlns:con="http://eviware.com/soapui/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="/user/login" path="/user/login" id="2f3bef9f-2ce0-4b49-a999-2bd564fd6918">
+  <con:settings>
+    <con:setting id="2f3bef9f-2ce0-4b49-a999-2bd564fd6918fileName">%2Fuser%2Flogin</con:setting>
+  </con:settings>
+  <con:parameters/>
+  <con:method name="loginUser" id="e4a60c50-9ad8-4272-ae18-356085411868" method="GET">
+    <con:description>
+Logs user into the system</con:description>
+    <con:settings/>
+    <con:parameters>
+      <con:parameter required="true">
+        <con:name>username</con:name>
+        <con:style>QUERY</con:style>
+        <con:description>The user name for login</con:description>
+      </con:parameter>
+      <con:parameter required="true">
+        <con:name>password</con:name>
+        <con:style>QUERY</con:style>
+        <con:description>The password for login in clear text</con:description>
+      </con:parameter>
+    </con:parameters>
+    <con:representation type="RESPONSE">
+      <con:mediaType>application/json</con:mediaType>
+      <con:status>200</con:status>
+      <con:params/>
+      <con:sampleContent>"string"</con:sampleContent>
+    </con:representation>
+    <con:representation type="RESPONSE">
+      <con:mediaType>application/xml</con:mediaType>
+      <con:status>200</con:status>
+      <con:params/>
+      <con:sampleContent>&lt;string>string&lt;/string></con:sampleContent>
+    </con:representation>
+    <con:representation type="RESPONSE">
+      <con:mediaType>application/json</con:mediaType>
+      <con:status>400</con:status>
+      <con:params/>
+    </con:representation>
+    <con:representation type="RESPONSE">
+      <con:mediaType>application/xml</con:mediaType>
+      <con:status>400</con:status>
+      <con:params/>
+    </con:representation>
+    <con:request name="Request 1" id="e0695f12-629c-4c67-a6d2-4acb760123d0" mediaType="application/json">
+      <con:settings/>
+      <con:endpoint>http://petstore.swagger.io</con:endpoint>
+      <con:credentials>
+        <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+        <con:authType>No Authorization</con:authType>
+      </con:credentials>
+      <con:parameters/>
+    </con:request>
+  </con:method>
+</con:resource>

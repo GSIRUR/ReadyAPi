@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase xmlns:con="http://eviware.com/soapui/config" id="9e726d01-74c6-413b-acfb-f9db9f1f88f8" discardOkResults="false" failOnError="false" failTestCaseOnErrors="true" keepSession="false" name="Assertion" searchProperties="true" timeout="0">
+  <con:settings>
+    <con:setting id="9e726d01-74c6-413b-acfb-f9db9f1f88f8fileName">Assertion</con:setting>
+  </con:settings>
+  <con:properties/>
+  <con:reportParameters/>
+</con:testCase>

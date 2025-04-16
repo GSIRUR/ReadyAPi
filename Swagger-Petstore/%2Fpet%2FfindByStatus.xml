@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:resource xmlns:con="http://eviware.com/soapui/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="/pet/findByStatus" path="/pet/findByStatus" id="1c4e885e-9c30-4946-a7d5-eef31c1028ed">
+  <con:settings>
+    <con:setting id="1c4e885e-9c30-4946-a7d5-eef31c1028edfileName">%2Fpet%2FfindByStatus</con:setting>
+  </con:settings>
+  <con:parameters/>
+  <con:method name="findPetsByStatus" id="29a2251e-f372-4089-b061-3ec6441595b0" method="GET">
+    <con:description>Multiple status values can be provided with comma separated strings
+Finds Pets by status</con:description>
+    <con:settings/>
+    <con:parameters>
+      <con:parameter required="true">
+        <con:name>status</con:name>
+        <con:style>QUERY</con:style>
+        <con:dataType>array</con:dataType>
+        <con:description>Status values that need to be considered for filter</con:description>
+      </con:parameter>
+    </con:parameters>
+    <con:representation type="RESPONSE">
+      <con:mediaType>application/json</con:mediaType>
+      <con:status>200</con:status>
+      <con:params/>
+      <con:sampleContent xsi:nil="true"/>
+    </con:representation>
+    <con:representation type="RESPONSE">
+      <con:mediaType>application/xml</con:mediaType>
+      <con:status>200</con:status>
+      <con:params/>
+      <con:sampleContent><![CDATA[<object>
+   <AnonymousModel>
+      <id>0</id>
+      <Category>
+         <id>0</id>
+         <name>string</name>
+      </Category>
+      <name>doggie</name>
+      <photoUrlss>
+         <photoUrl>string</photoUrl>
+      </photoUrlss>
+      <tagss>
+         <tag>
+            <id>0</id>
+            <name>string</name>
+         </tag>
+      </tagss>
+      <status>available</status>
+   </AnonymousModel>
+</object>]]></con:sampleContent>
+    </con:representation>
+    <con:representation type="RESPONSE">
+      <con:mediaType>application/json</con:mediaType>
+      <con:status>400</con:status>
+      <con:params/>
+    </con:representation>
+    <con:representation type="RESPONSE">
+      <con:mediaType>application/xml</con:mediaType>
+      <con:status>400</con:status>
+      <con:params/>
+    </con:representation>
+    <con:request name="Request 1" id="d82da54b-2b05-4fce-a3af-db99b9ba79cd" mediaType="application/json">
+      <con:settings/>
+      <con:endpoint>http://petstore.swagger.io</con:endpoint>
+      <con:credentials>
+        <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+        <con:authType>No Authorization</con:authType>
+      </con:credentials>
+      <con:parameters/>
+    </con:request>
+  </con:method>
+</con:resource>
